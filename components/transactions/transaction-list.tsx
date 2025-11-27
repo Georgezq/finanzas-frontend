@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { MovimientoTipoEnum, type Transaccion } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { ArrowUpRight, ArrowDownRight, Pencil, Trash2 } from "lucide-react";
@@ -13,6 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
+import { MovimientoTipoEnum } from "@/lib/enums/tipoMovimiento";
+import { Transaccion } from "@/lib/types/transacciones/transacciones";
+import { MovimientoTipoAllEnum } from "@/lib/enums/tipoMovimientoAll";
 
 interface TransactionListProps {
   readonly transactions: Transaccion[];
@@ -25,32 +27,38 @@ export function TransactionList({
   onEdit,
   onDelete,
 }: TransactionListProps) {
-  const [filter, setFilter] = useState<"all" | "ingreso" | "gasto">("all");
+  const [filter, setFilter] = useState<
+    MovimientoTipoAllEnum | MovimientoTipoEnum
+  >(MovimientoTipoAllEnum.ALL);
 
   const filtered = transactions.filter(
-    (t) => filter === "all" || t.type === filter
+    (t) => filter === MovimientoTipoAllEnum.ALL || t.type === filter
   );
 
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
         <Button
-          variant={filter === "all" ? "default" : "outline"}
-          onClick={() => setFilter("all")}
+          variant={filter === MovimientoTipoAllEnum.ALL ? "default" : "outline"}
+          onClick={() => setFilter(MovimientoTipoAllEnum.ALL)}
           size="sm"
         >
           Todas
         </Button>
         <Button
-          variant={filter === "ingreso" ? "default" : "outline"}
-          onClick={() => setFilter("ingreso")}
+          variant={
+            filter === MovimientoTipoAllEnum.INGRESO ? "default" : "outline"
+          }
+          onClick={() => setFilter(MovimientoTipoAllEnum.INGRESO)}
           size="sm"
         >
           Ingresos
         </Button>
         <Button
-          variant={filter === "gasto" ? "default" : "outline"}
-          onClick={() => setFilter("gasto")}
+          variant={
+            filter === MovimientoTipoAllEnum.GASTO ? "default" : "outline"
+          }
+          onClick={() => setFilter(MovimientoTipoAllEnum.GASTO)}
           size="sm"
         >
           Gastos
@@ -84,9 +92,14 @@ export function TransactionList({
                     <p className="font-medium truncate">
                       {transaction.category?.name || "Sin categoría"}
                     </p>
-                    <p className="text-sm text-muted-foreground truncate">
-                      {transaction.description || formatDate(transaction.date)}
-                    </p>
+                    <div className="flex flex-row items-center gap-4">
+                      <p className="text-sm text-muted-foreground truncate">
+                        {transaction.description || "Sin descripción"}
+                      </p>
+                      <p className="text-sm text-muted-foreground truncate">
+                        {formatDate(transaction.date)}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">

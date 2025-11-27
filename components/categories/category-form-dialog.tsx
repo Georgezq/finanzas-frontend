@@ -12,11 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  MovimientoTipoEnum,
-  type Categoria,
-  type CreateCategoriaDTO,
-} from "@/lib/types";
+
 import { useAppToast } from "@/components/ui/toastProvider";
 import {
   Select,
@@ -25,6 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MovimientoTipoEnum } from "@/lib/enums/tipoMovimiento";
+import {
+  Categoria,
+  CreateCategoriaDTO,
+} from "@/lib/types/categorias/categorias";
 
 const DEFAULT_COLORS = [
   "#10b981",

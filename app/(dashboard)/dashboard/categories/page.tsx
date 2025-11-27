@@ -1,45 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useCategories } from "@/lib/hooks/use-categories"
-import { CategoryGrid } from "@/components/categories/category-grid"
-import { CategoryFormDialog } from "@/components/categories/category-form-dialog"
-import { CategoryListSkeleton } from "@/components/skeletons/category-skeleton"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import type { Categoria, CreateCategoriaDTO } from "@/lib/types"
+import { useState } from "react";
+import { useCategories } from "@/lib/hooks/use-categories";
+import { CategoryGrid } from "@/components/categories/category-grid";
+import { CategoryFormDialog } from "@/components/categories/category-form-dialog";
+import { CategoryListSkeleton } from "@/components/skeletons/category-skeleton";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import {
+  Categoria,
+  CreateCategoriaDTO,
+} from "@/lib/types/categorias/categorias";
 
 export default function CategoriesPage() {
-  const { categories, loading, createCategory, updateCategory, deleteCategory } = useCategories()
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingCategory, setEditingCategory] = useState<Categoria | undefined>()
+  const {
+    categories,
+    loading,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  } = useCategories();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<
+    Categoria | undefined
+  >();
 
   const handleSubmit = async (data: CreateCategoriaDTO) => {
     if (editingCategory) {
-      await updateCategory(editingCategory.id, data)
+      await updateCategory(editingCategory.id, data);
     } else {
-      await createCategory(data)
+      await createCategory(data);
     }
-    setEditingCategory(undefined)
-  }
+    setEditingCategory(undefined);
+  };
 
   const handleEdit = (category: Categoria) => {
-    setEditingCategory(category)
-    setDialogOpen(true)
-  }
+    setEditingCategory(category);
+    setDialogOpen(true);
+  };
 
   const handleDelete = async (id: string) => {
     if (confirm("¿Estás seguro de eliminar esta categoría?")) {
-      await deleteCategory(id)
+      await deleteCategory(id);
     }
-  }
+  };
 
   const handleOpenChange = (open: boolean) => {
-    setDialogOpen(open)
+    setDialogOpen(open);
     if (!open) {
-      setEditingCategory(undefined)
+      setEditingCategory(undefined);
     }
-  }
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -57,7 +68,11 @@ export default function CategoriesPage() {
       {loading ? (
         <CategoryListSkeleton />
       ) : (
-        <CategoryGrid categories={categories} onEdit={handleEdit} onDelete={handleDelete} />
+        <CategoryGrid
+          categories={categories}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       )}
 
       <CategoryFormDialog
@@ -67,5 +82,5 @@ export default function CategoriesPage() {
         onSubmit={handleSubmit}
       />
     </div>
-  )
+  );
 }

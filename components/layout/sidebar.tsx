@@ -19,7 +19,7 @@ export function Sidebar() {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     cookieStore.delete("authToken");
-    window.location.href = "/login";
+    globalThis.location.href = "/login";
   };
 
   return (
@@ -48,7 +48,7 @@ export function Sidebar() {
               <Button
                 variant={isActive ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full justify-start gap-3",
+                  "w-full justify-start gap-3 my-1",
                   isActive &&
                     "bg-primary text-primary-foreground hover:bg-primary/90"
                 )}

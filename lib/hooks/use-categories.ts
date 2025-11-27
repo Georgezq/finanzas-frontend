@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type {
+
+import { categoryRepository } from "../repositories/category-repository";
+import { extractApiError } from "@/lib/utils/api-error";
+import {
   Categoria,
   CreateCategoriaDTO,
   UpdateCategoriaDTO,
-} from "../types";
-import { categoryRepository } from "../repositories/category-repository";
-import { extractApiError } from "@/lib/utils/api-error";
+} from "@/lib/types/categorias/categorias";
 
 export function useCategories() {
   const [categories, setCategories] = useState<Categoria[]>([]);

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { UserLogin, UserRegister, Usuario } from "../types";
 import { authRepository } from "../repositories/auth-repository";
 import { extractApiError } from "@/lib/utils/api-error";
+import { UserRegister, UserLogin } from "@/lib/types/auth/userAuth";
+import { Usuario } from "@/lib/types/user/user";
 
 export function useAuth() {
   const [auth] = useState<Usuario[]>([]);

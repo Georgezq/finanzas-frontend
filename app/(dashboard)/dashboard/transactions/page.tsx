@@ -8,7 +8,10 @@ import { TransactionFormDialog } from "@/components/transactions/transaction-for
 import { TransactionListSkeleton } from "@/components/skeletons/transaction-skeleton";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import type { Transaccion, CreateTransaccionDTO } from "@/lib/types";
+import {
+  Transaccion,
+  CreateTransaccionDTO,
+} from "@/lib/types/transacciones/transacciones";
 
 export default function TransactionsPage() {
   const {
@@ -23,8 +26,6 @@ export default function TransactionsPage() {
   const [editingTransaction, setEditingTransaction] = useState<
     Transaccion | undefined
   >();
-
-  console.log(transactions);
 
   const handleSubmit = async (data: CreateTransaccionDTO) => {
     if (editingTransaction) {

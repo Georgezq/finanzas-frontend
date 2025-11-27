@@ -1,6 +1,5 @@
 "use client";
 
-import type { Categoria } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MoreVertical, Pencil, Trash2, Eye } from "lucide-react";
@@ -11,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { Categoria } from "@/lib/types/categorias/categorias";
 
 interface CategoryGridProps {
   readonly categories: Categoria[];
@@ -66,7 +66,7 @@ export function CategoryGrid({
 
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem asChild>
-                        <Link href={`/categories/${category.id}`}>
+                        <Link href={`/dashboard/categories/${category.id}`}>
                           <Eye className="h-4 w-4" />
                           Ver detalle
                         </Link>

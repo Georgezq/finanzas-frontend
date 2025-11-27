@@ -20,12 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MovimientoTipoEnum } from "@/lib/enums/tipoMovimiento";
+import { Categoria } from "@/lib/types/categorias/categorias";
 import {
-  type Transaccion,
-  type CreateTransaccionDTO,
-  type Categoria,
-  MovimientoTipoEnum,
-} from "@/lib/types";
+  Transaccion,
+  CreateTransaccionDTO,
+} from "@/lib/types/transacciones/transacciones";
 
 interface TransactionFormDialogProps {
   readonly open: boolean;
@@ -45,7 +45,7 @@ export function TransactionFormDialog({
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<CreateTransaccionDTO>({
     amount: 0,
-    type: MovimientoTipoEnum.INGRESO,
+    type: MovimientoTipoEnum.INGRESO || MovimientoTipoEnum.GASTO,
     categoryId: "",
     description: "",
     date: new Date(),
@@ -63,7 +63,7 @@ export function TransactionFormDialog({
     } else {
       setFormData({
         amount: 0,
-        type: MovimientoTipoEnum.INGRESO,
+        type: MovimientoTipoEnum.INGRESO || MovimientoTipoEnum.GASTO,
         categoryId: categories[0]?.id || "",
         description: "",
         date: new Date(),
@@ -126,6 +126,8 @@ export function TransactionFormDialog({
               id="amount"
               type="number"
               step="0.01"
+              min={0.01}
+              placeholder="Ingrese el monto"
               value={formData.amount || ""}
               onChange={(e) =>
                 setFormData({
@@ -140,6 +142,7 @@ export function TransactionFormDialog({
           <div className="space-y-2">
             <Label htmlFor="category">Categoría</Label>
             <Select
+              required={true}
               value={formData.categoryId}
               onValueChange={(value) =>
                 setFormData({ ...formData, categoryId: value })
@@ -177,6 +180,7 @@ export function TransactionFormDialog({
             <Label htmlFor="description">Descripción (opcional)</Label>
             <Textarea
               id="description"
+              placeholder="Describe tu transacción..."
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
